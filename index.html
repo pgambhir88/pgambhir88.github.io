@@ -163,8 +163,8 @@ async function byCriteria() {
  //use log scale for both x & y -axis
 
  //Color of the circle indicates the shots scored by a player
- var x = d3.scaleLinear().domain([4794,15921]).range([0,width]); //shots scale
- var y = d3.scaleLinear().domain([4,51]).range([height,0]); //goals scale
+ var x = d3.scaleLinear().domain([5,751]).range([0,width]); //shots scale
+ var y = d3.scaleLinear().domain([2,135]).range([height,0]); //goals scale
  //var c = d3.scaleLinear().domain([20,60,100]).range(["red","white","green"]); 
  var c = d3.scaleSequential().domain([9,70]).interpolator(d3.interpolatePuRd);//Conversion scale - color of the bubble
  var r = d3.scaleLinear().domain([20,100]).range([0,25]);  //Average scale - radius of the bubble
