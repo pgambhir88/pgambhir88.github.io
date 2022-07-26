@@ -180,7 +180,7 @@ async function byCriteria() {
  
     }
   var bubbleColor = function(criteria,d) {
-		if (criteria == "by Shots & Goals & Average ") {
+		if (criteria == "by Shots, Goals, Average and Goals_per_Match ") {
 			return c(d);
 		} else {
 			return d3.color("plum");
@@ -203,7 +203,7 @@ async function byCriteria() {
           "translate(" + margin.left + "," + margin.top + ")");
 		  
   const data = await d3.csv(
-  'https://pgambhir88.github.io/best_footballer.csv');
+  'https://pgambhir88.github.io/best_footballer_v1.csv');
   //console.log(data);
 
   // List of groups (here I have one group per column)
