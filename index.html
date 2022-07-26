@@ -272,7 +272,7 @@ async function byCriteria() {
 
    var mousemove = function(d) {
     tooltip
-	  .html("Player: " + d.Player + "  Runs: " + d.Runs + "  Hundreds: " + d.Hundred + "  Avg: " + d.Avg + "  Conversion %: " + d.conversion_pct)
+	  .html("Player: " + d.Player NAmes + "  Shots: " + d.Shots + "  Goals: " + d.Goals + "  Avg: " + d.xG Per Avg Match + "  Goals per Match %: " + d.Goals per Match)
 	  .style("left", (d3.mouse(this)[0]) + "px") // It is important to put the +90: other wise the tooltip is exactly where the point is an it creates a weird effect
       .style("top", (d3.mouse(this)[1]) + "px");
 	  
