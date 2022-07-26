@@ -141,13 +141,19 @@
 
 <!-- Create a div where the graph will take place -->
 <div id="my_chart"></div>
+	
+<!--<svg width=960 height=600></svg>-->
+<!-- Load d3-annotation & legend; Credit: www.susielu.com-->
+<script src="https://rawgit.com/susielu/d3-annotation/master/d3-annotation.min.js"></script>
+<script src="https://cdnjs.com/libraries/d3-legend"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.min.js"></script>
 
 <script>
 
 async function byCriteria() {
 
  //default value of criteria onload(); will asume value on button onclick()
- var selectedCriteria = "by Hundreds & Runs"
+ var selectedCriteria = "by Shots and Goals "
  
  // set the dimensions and margins of the graph
  var margin = {top: 50, right: 25, bottom: 50, left: 50},
@@ -156,16 +162,16 @@ async function byCriteria() {
 
  //use log scale for both x & y -axis
 
- //Color of the circle indicates the run scored by a batsman
- var x = d3.scaleLinear().domain([4794,15921]).range([0,width]); //Runs scale
- var y = d3.scaleLinear().domain([4,51]).range([height,0]); //hundreds scale
+ //Color of the circle indicates the shots scored by a player
+ var x = d3.scaleLinear().domain([4794,15921]).range([0,width]); //shots scale
+ var y = d3.scaleLinear().domain([4,51]).range([height,0]); //goals scale
  //var c = d3.scaleLinear().domain([20,60,100]).range(["red","white","green"]); 
  var c = d3.scaleSequential().domain([9,70]).interpolator(d3.interpolatePuRd);//Conversion scale - color of the bubble
  var r = d3.scaleLinear().domain([20,100]).range([0,25]);  //Average scale - radius of the bubble
 
 
  var bubbleRadius = function(criteria,d) {
-		if (criteria == "by Hundreds & Runs") {
+		if (criteria == "by Shots and Goals") {
 			//return r(40);
 			return 5;
 		} else { 
@@ -174,7 +180,7 @@ async function byCriteria() {
  
     }
   var bubbleColor = function(criteria,d) {
-		if (criteria == "by Hundreds,Runs,Avg & Conversion pct") {
+		if (criteria == "by Shots & Goals & Average ") {
 			return c(d);
 		} else {
 			return d3.color("plum");
@@ -197,11 +203,11 @@ async function byCriteria() {
           "translate(" + margin.left + "," + margin.top + ")");
 		  
   const data = await d3.csv(
-  'https://amarroyds.github.io/ICC_Test_Batting_Figures.csv');
+  'https://pgambhir88.github.io/best_footballer.csv');
   //console.log(data);
 
   // List of groups (here I have one group per column)
-  var allGroup = ["by Hundreds & Runs", "by Hundreds,Runs & Avg", "by Hundreds,Runs,Avg & Conversion pct"]
+  var allGroup = ["by Shots and Goals", "shots, goals & Avg", "by Shots, Goals, Avg and Goals per Match"]
   
   // add the options to the button
   d3.select("#selectButton")
@@ -221,12 +227,12 @@ async function byCriteria() {
    
    // add Y-axis
    svg.append("g")
-	.call(d3.axisLeft(y).tickValues([5,15,25,35,45]).tickFormat(d3.format("~s")));
+	.call(d3.axisLeft(y).tickValues([50, 100, 150, 200, 250]).tickFormat(d3.format("~s")));
    
    //add X-axis
    svg.append("g")
 	.attr("transform","translate(0,"+height+")")
-	.call(d3.axisBottom(x).tickValues([5000,7500,10000,12500,15000]).tickFormat(d3.format("~s")));
+	.call(d3.axisBottom(x).tickValues([100, 200, 300, 400, 500, 600, 700, 800).tickFormat(d3.format("~s")));
 	
     // text label for the x axis
    svg.append("text")             
@@ -234,7 +240,7 @@ async function byCriteria() {
             "translate(" + (width/2) + " ," + 
                            (height + 30) + ")")
       .style("text-anchor", "middle")
-      .text("Total runs scored");
+      .text("Total shots scored");
 	  
     // text label for the y axis
 	svg.append("text")
@@ -242,7 +248,7 @@ async function byCriteria() {
       .attr("y", 0 - (margin.left/2))
       .attr("x",0 - (height/2))
       .style("text-anchor", "middle")
-      .text("# of Hundres scored");  
+      .text("Goals Scored");  
 
 	
    // Add a tooltip div. Here I define the general feature of the tooltip: stuff that do not depend on the data point.
