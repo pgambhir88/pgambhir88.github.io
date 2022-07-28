@@ -313,38 +313,7 @@ async function byCriteria() {
 	
 	// Add annotations...
 	// Features of the annotation
-	const annotations = [
-		{
-			note: {
-			label: "A legend who averaged 99 runs/innings",
-			title: "Donald Bradman"
-		},
-			x: 184 + margin.left,
-			y: 242 + margin.top,
-			dy: -25,
-			dx: -20
-		},
-		
-		{
-			note: {
-			label: "A modern day hero who made most hundreds & runs",
-			title: "Sachin Tendulkar"
-		},
-			x: 880 + margin.left,
-			y: 10 + margin.top,
-			dy: 25,
-			dx: -20
-		}
-		
-	]
-
-	// Add annotation to the chart
-	const makeAnnotations = d3.annotation()
-     .annotations(annotations)
 	
-	d3.select("#icc_scatter")
-	.append("g")
-	.call(makeAnnotations)
 	
 	//Add legend for color i.e. Conversion %
 	svg.append("g")
