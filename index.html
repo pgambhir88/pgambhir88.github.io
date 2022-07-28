@@ -117,9 +117,9 @@
 
 <!-- Create a div where the button will reside -->
 <!--<div class="buttons">
-    <button value = "byHundredRun" onclick="byRunsHundreds()">By runs & hundreds scored</button>   
-	<button value = "byHundredRunAvg" onclick="byAvgRunsHundreds()">By avg, runs & hundreds scored</button> 
-	<button value = "byAll" onclick="byAll()">By conversion, avg, runs & hundreds scored</button> 
+    <button value = "byGoalsShots" onclick="byShotsGoals()">By Shots & Goalsscored</button>   
+	<button value = "byGoalsShotsAvg" onclick="byAvgShotsGoalss()">By avg, Shots & Goalsscored</button> 
+	<button value = "byAll" onclick="byAll()">By conversion, avg, Shots & Goalsscored</button> 
 </div>-->
 
 <div class="text-things">
@@ -153,7 +153,7 @@
 async function byCriteria() {
 
  //default value of criteria onload(); will asume value on button onclick()
- var selectedCriteria = "by Hundreds & Runs"
+ var selectedCriteria = "by Goals& Shots"
  
  // set the dimensions and margins of the graph
  var margin = {top: 50, right: 25, bottom: 50, left: 50},
@@ -163,15 +163,15 @@ async function byCriteria() {
  //use log scale for both x & y -axis
 
  //Color of the circle indicates the run scored by a batsman
- var x = d3.scaleLinear().domain([5,751]).range([0,width]); //Runs scale
- var y = d3.scaleLinear().domain([2,135]).range([height,0]); //hundreds scale
+ var x = d3.scaleLinear().domain([5,751]).range([0,width]); //Shots scale
+ var y = d3.scaleLinear().domain([2,135]).range([height,0]); //Goalsscale
  //var c = d3.scaleLinear().domain([20,60,100]).range(["red","white","green"]); 
  var c = d3.scaleSequential().domain([9,70]).interpolator(d3.interpolatePuRd);//Conversion scale - color of the bubble
  var r = d3.scaleLinear().domain([20,100]).range([0,25]);  //Average scale - radius of the bubble
 
 
  var bubbleRadius = function(criteria,d) {
-		if (criteria == "by Hundreds & Runs") {
+		if (criteria == "by Goals& Shots") {
 			//return r(40);
 			return 5;
 		} else { 
@@ -180,7 +180,7 @@ async function byCriteria() {
  
     }
   var bubbleColor = function(criteria,d) {
-		if (criteria == "by Hundreds,Runs,Avg & Conversion pct") {
+		if (criteria == "by Goals,Shots,Avg & Conversion pct") {
 			return c(d);
 		} else {
 			return d3.color("plum");
@@ -207,7 +207,7 @@ async function byCriteria() {
   //console.log(data);
 
   // List of groups (here I have one group per column)
-  var allGroup = ["by Hundreds & Runs", "by Hundreds,Runs & Avg", "by Hundreds,Runs,Avg & Conversion pct"]
+  var allGroup = ["by Goals& Shots", "by Goals,Shots & Avg", "by Goals,Shots,Avg & Conversion pct"]
   
   // add the options to the button
   d3.select("#selectButton")
@@ -240,7 +240,7 @@ async function byCriteria() {
             "translate(" + (width/2) + " ," + 
                            (height + 30) + ")")
       .style("text-anchor", "middle")
-      .text("Total runs scored");
+      .text("Total Shots scored");
 	  
     // text label for the y axis
 	svg.append("text")
@@ -248,7 +248,7 @@ async function byCriteria() {
       .attr("y", 0 - (margin.left/2))
       .attr("x",0 - (height/2))
       .style("text-anchor", "middle")
-      .text("# of Hundres scored");  
+      .text("# of Goals scored");  
 
 	
    // Add a tooltip div. Here I define the general feature of the tooltip: stuff that do not depend on the data point.
@@ -272,11 +272,11 @@ async function byCriteria() {
 
    var mousemove = function(d) {
     tooltip
-	  .html("Player: " + d.Player + "  Runs: " + d.Runs + "  Hundreds: " + d.Hundred + "  Avg: " + d.Avg + "  Conversion %: " + d.conversion_pct)
+	  .html("Player: " + d.Player + "  Shots: " + d.Shots + "  Goals: " + d.Goals + "  Avg: " + d.Avg + "  Conversion %: " + d.conversion_pct)
 	  .style("left", (d3.mouse(this)[0]) + "px") // It is important to put the +90: other wise the tooltip is exactly where the point is an it creates a weird effect
       .style("top", (d3.mouse(this)[1]) + "px");
 	  
-	//	  .html("Player: " + d.Player + "  Runs: " + d.Runs + "  Hundreds: " + d.Hundred + "  Avg: " + d.Avg + "  Conversion %: " + d.conversion_pct)
+	//	  .html("Player: " + d.Player + "  Shots: " + d.Shots + "  Goals: " + d.Goals + "  Avg: " + d.Avg + "  Conversion %: " + d.conversion_pct)
 	
 	//console.log(d3.mouse(this)[0]);
 	//console.log(d3.mouse(this)[1]);
@@ -293,20 +293,16 @@ async function byCriteria() {
    
    /*var tooltip = d3.select('.tooltip-area')
         .style('opacity', 0);
-
    const mouseover = (event, d) => {
         tooltip.style("opacity", 1);
       };
-
    const mouseleave = (event, d) => {
         // tooltip.style('opacity', 0);
       }
-
    const mousemove = (event, d) => {
         const text = d3.select('.tooltip-area__text');
         text.text(`Player is ${d.Player}`);
         const [x, y] = d3.pointer(event);
-
         tooltip
           .attr('transform', `translate(${x}, ${y})`);
     */
@@ -353,7 +349,6 @@ async function byCriteria() {
 		.orient('horizontal')
 		.title("Average")
         .titleWidth(100);
-
 	svg.select(".legendSize")
 		.call(legendSize);
     */    
@@ -363,8 +358,8 @@ async function byCriteria() {
    .data(data)
    .enter()
     .append('circle')
-      .attr('cx', function (d,i) { return x(d.Runs); })
-      .attr('cy', function (d,i) { return y(d.Hundred);})
+      .attr('cx', function (d,i) { return x(d.Shots); })
+      .attr('cy', function (d,i) { return y(d.Goals);})
       .attr('r', function(d,i) {return bubbleRadius(selectedCriteria,d.Avg);})
 	  .style("fill", function(d,i) {return bubbleColor(selectedCriteria,d.conversion_pct);})
 	.on("mouseover", mouseover )
@@ -387,8 +382,8 @@ async function byCriteria() {
          .data(data)
 		 .transition()
          .duration(1000)
-			.attr('cx', function (d,i) { return x(d.Runs); })
-			.attr('cy', function (d,i) { return y(d.Hundred);})
+			.attr('cx', function (d,i) { return x(d.Shots); })
+			.attr('cy', function (d,i) { return y(d.Goals);})
             .attr('r', function(d,i) {return bubbleRadius(selectedCriteria,d.Avg);})
 			.style("fill", function(d,i) {return bubbleColor(selectedCriteria,d.conversion_pct);});
 		//.append('title') //possible way of implementing tooltip
@@ -412,7 +407,7 @@ async function byCriteria() {
 }
 </script>
 <div id="contacts">
-	<p> 1. Datasource:https://www.kaggle.com/veeralakrishna/icc-test-cricket-runs?select=ICC+Test+Bat+3001.xlsx</br>
+	<p> 1. Datasource:https://www.kaggle.com/veeralakrishna/icc-test-cricket-Shots?select=ICC+Test+Bat+3001.xlsx</br>
         2. Cricket: https://en.wikipedia.org/wiki/Cricket</br>
 	    3. Annotation & legend library credit:www.susielu.com</br></p>
 </div>
