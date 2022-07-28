@@ -3,7 +3,7 @@
 <script src='https://d3js.org/d3.v5.min.js'></script>
 <style> 
 
-	<!--circle {fill: lightorange; stroke: black;} -->
+	<!--circle {fill: lightblue; stroke: black;} -->
 	body {
             font-family: "Arial", sans-serif;
         }
@@ -60,10 +60,10 @@
 		between 2016 to 2020. This framework is based on reference from follwoing link.
 		(<a href="https://en.wikipedia.org/wiki/The_Best_FIFA_Men%27s_Player">reference</a>)
 		
-	</p>  
+	</p>   
 </div>
 <div id="wisden_ranking">
-<h3> Ranking of great footballers between 2016 to 2020... </h3> 
+<h3> Wisden Ranking of all-time great test batesmen... </h3> 
 <script>
 	var columns = [
 		{src:"https://pgambhir88.github.io/ronaldo.jpg"}, 
@@ -123,12 +123,16 @@
 </div>-->
 
 <div class="text-things">
-		<p>FIFA has published the ranking year on year on basis of certain creteria but everyone is not convinced on their ranking system so we have picked up 
-			data from 2016 to 2020 and on the basis of maximum number of shots, goals, matches played and on average basis we have calculated the 
-			player's ranking. .</p>
+		<p>However, not all agree with the Wisden ranking. Test cricket has evolved over time
+		and become more competitive when Donald Bradman used to play cricket. In their opinion
+		Sachin Tendulkar is all-time great. Often, the choice of the greatest batsman is
+		driven by emotions and using limited data.</p>
 	   
 		<p>So, below is a tool for the fans to explore on their own and support their argument
-		with data. In this we picked up data of all the players and calculated the ranking on basis of above mentioned criteria.</p>
+		with data. In this top 100 batmens' batting performance can be compared using aggregate statistics 
+		such as runs and hundreds. There are other normalized statistics such as batting average
+		and conversion percentage i.e., what percentage of 50+ score converted in a hundred can be 
+		used to remove the variability of time and opponents they have played against.</p>
 	
 		<p><b>We are confident you will gain different perspective driven by data as you 
 		add the parameters progressively using <i>the dropdown provided below,</i></b></p>
@@ -141,19 +145,20 @@
 
 <!-- Create a div where the graph will take place -->
 <div id="my_chart"></div>
-	
+
 <!--<svg width=960 height=600></svg>-->
 <!-- Load d3-annotation & legend; Credit: www.susielu.com-->
 <script src="https://rawgit.com/susielu/d3-annotation/master/d3-annotation.min.js"></script>
 <script src="https://cdnjs.com/libraries/d3-legend"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.min.js"></script>
 
+
 <script>
 
 async function byCriteria() {
 
  //default value of criteria onload(); will asume value on button onclick()
- var selectedCriteria = "by Shots and Goals "
+ var selectedCriteria = "by Hundreds & Runs"
  
  // set the dimensions and margins of the graph
  var margin = {top: 50, right: 25, bottom: 50, left: 50},
@@ -162,16 +167,16 @@ async function byCriteria() {
 
  //use log scale for both x & y -axis
 
- //Color of the circle indicates the shots scored by a player
- var x = d3.scaleLinear().domain([5,751]).range([0,width]); //shots scale
- var y = d3.scaleLinear().domain([2,135]).range([height,0]); //goals scale
+ //Color of the circle indicates the run scored by a batsman
+ var x = d3.scaleLinear().domain([4794,15921]).range([0,width]); //Runs scale
+ var y = d3.scaleLinear().domain([4,51]).range([height,0]); //hundreds scale
  //var c = d3.scaleLinear().domain([20,60,100]).range(["red","white","green"]); 
  var c = d3.scaleSequential().domain([9,70]).interpolator(d3.interpolatePuRd);//Conversion scale - color of the bubble
  var r = d3.scaleLinear().domain([20,100]).range([0,25]);  //Average scale - radius of the bubble
 
 
  var bubbleRadius = function(criteria,d) {
-		if (criteria == "by Shots and Goals") {
+		if (criteria == "by Hundreds & Runs") {
 			//return r(40);
 			return 5;
 		} else { 
@@ -180,7 +185,7 @@ async function byCriteria() {
  
     }
   var bubbleColor = function(criteria,d) {
-		if (criteria == "by Shots, Goals, Average and Goals_per_Match ") {
+		if (criteria == "by Hundreds,Runs,Avg & Conversion pct") {
 			return c(d);
 		} else {
 			return d3.color("plum");
@@ -203,11 +208,11 @@ async function byCriteria() {
           "translate(" + margin.left + "," + margin.top + ")");
 		  
   const data = await d3.csv(
-  'https://pgambhir88.github.io/best_footballer_v1.csv');
+  'https://amarroyds.github.io/ICC_Test_Batting_Figures.csv');
   //console.log(data);
 
   // List of groups (here I have one group per column)
-  var allGroup = ["by Shots and Goals", "shots, goals & Avg", "by Shots, Goals, Avg and Goals per Match"]
+  var allGroup = ["by Hundreds & Runs", "by Hundreds,Runs & Avg", "by Hundreds,Runs,Avg & Conversion pct"]
   
   // add the options to the button
   d3.select("#selectButton")
@@ -227,12 +232,12 @@ async function byCriteria() {
    
    // add Y-axis
    svg.append("g")
-	.call(d3.axisLeft(y).tickValues([50, 100, 150, 200, 250]).tickFormat(d3.format("~s")));
+	.call(d3.axisLeft(y).tickValues([5,15,25,35,45]).tickFormat(d3.format("~s")));
    
    //add X-axis
    svg.append("g")
 	.attr("transform","translate(0,"+height+")")
-	.call(d3.axisBottom(x).tickValues([100, 200, 300, 400, 500, 600, 700, 800).tickFormat(d3.format("~s")));
+	.call(d3.axisBottom(x).tickValues([5000,7500,10000,12500,15000]).tickFormat(d3.format("~s")));
 	
     // text label for the x axis
    svg.append("text")             
@@ -240,7 +245,7 @@ async function byCriteria() {
             "translate(" + (width/2) + " ," + 
                            (height + 30) + ")")
       .style("text-anchor", "middle")
-      .text("Total shots scored");
+      .text("Total runs scored");
 	  
     // text label for the y axis
 	svg.append("text")
@@ -248,7 +253,7 @@ async function byCriteria() {
       .attr("y", 0 - (margin.left/2))
       .attr("x",0 - (height/2))
       .style("text-anchor", "middle")
-      .text("Goals Scored");  
+      .text("# of Hundres scored");  
 
 	
    // Add a tooltip div. Here I define the general feature of the tooltip: stuff that do not depend on the data point.
@@ -272,7 +277,7 @@ async function byCriteria() {
 
    var mousemove = function(d) {
     tooltip
-	  .html("Player: " + d.Player NAmes + "  Shots: " + d.Shots + "  Goals: " + d.Goals + "  Avg: " + d.xG_Per_Avg_Match + "  Goals per Match %: " + d.Goals_per_Match)
+	  .html("Player: " + d.Player + "  Runs: " + d.Runs + "  Hundreds: " + d.Hundred + "  Avg: " + d.Avg + "  Conversion %: " + d.conversion_pct)
 	  .style("left", (d3.mouse(this)[0]) + "px") // It is important to put the +90: other wise the tooltip is exactly where the point is an it creates a weird effect
       .style("top", (d3.mouse(this)[1]) + "px");
 	  
@@ -394,10 +399,10 @@ async function byCriteria() {
    .data(data)
    .enter()
     .append('circle')
-      .attr('cx', function (d,i) { return x(d.Shots); })
-      .attr('cy', function (d,i) { return y(d.Goals);})
-      .attr('r', function(d,i) {return bubbleRadius(selectedCriteria,d.xG_Per_Avg_Match);})
-	  .style("fill", function(d,i) {return bubbleColor(selectedCriteria,d.Goals_per_Match);})
+      .attr('cx', function (d,i) { return x(d.Runs); })
+      .attr('cy', function (d,i) { return y(d.Hundred);})
+      .attr('r', function(d,i) {return bubbleRadius(selectedCriteria,d.Avg);})
+	  .style("fill", function(d,i) {return bubbleColor(selectedCriteria,d.conversion_pct);})
 	.on("mouseover", mouseover )
     .on("mousemove", mousemove )
     .on("mouseleave", mouseleave );
@@ -418,10 +423,10 @@ async function byCriteria() {
          .data(data)
 		 .transition()
          .duration(1000)
-			.attr('cx', function (d,i) { return x(d.Shots); })
-			.attr('cy', function (d,i) { return y(d.Goals);})
-            .attr('r', function(d,i) {return bubbleRadius(selectedCriteria,d.xG_Per_Avg_Match);})
-			.style("fill", function(d,i) {return bubbleColor(selectedCriteria,d.Goals_per_Match);});
+			.attr('cx', function (d,i) { return x(d.Runs); })
+			.attr('cy', function (d,i) { return y(d.Hundred);})
+            .attr('r', function(d,i) {return bubbleRadius(selectedCriteria,d.Avg);})
+			.style("fill", function(d,i) {return bubbleColor(selectedCriteria,d.conversion_pct);});
 		//.append('title') //possible way of implementing tooltip
         //.text((d) => `Player: ${d.Player}`);
 
@@ -443,7 +448,9 @@ async function byCriteria() {
 }
 </script>
 <div id="contacts">
-	
+	<p> 1. Datasource:https://www.kaggle.com/veeralakrishna/icc-test-cricket-runs?select=ICC+Test+Bat+3001.xlsx</br>
+        2. Cricket: https://en.wikipedia.org/wiki/Cricket</br>
+	    3. Annotation & legend library credit:www.susielu.com</br></p>
 </div>
 </body>
 </html>
