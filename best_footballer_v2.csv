@@ -1,4 +1,4 @@
-﻿Player,Span,Mat,Substitution ,Avg_1,Runs,Mins,Avg,Hundred,xG,OnTarget,Conversion_pct,Shots_Per_Avg_Match,On_Target_Per_Avg_Match,Conversion
+﻿Player,Span,Mat,Substitution ,Avg_1,Shots,Mins,Avg,Goals,xG,OnTarget,Conversion_pct,Shots_Per_Avg_Match,On_Target_Per_Avg_Match,Conversion
 Cristiano Ronaldo,(2016-2020),124,2,0.87,751,11390,87.06451613,111,107.96,296,89.51612903,6.06,2.39,0.90
 Lionel Messi,(2016-2020),133,13,0.84,744,12773,84.03759398,135,111.77,345,101.5037594,5.59,2.59,1.02
 Robert Lewandowski,(2016-2020),126,9,0.99,587,11663,99.29365079,127,125.11,275,100.7936508,4.66,2.18,1.01
