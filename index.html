@@ -153,7 +153,7 @@
 async function byCriteria() {
 
  //default value of criteria onload(); will asume value on button onclick()
- var selectedCriteria = "by Goals & Runs"
+ var selectedCriteria = "by Goals & Shots"
  
  // set the dimensions and margins of the graph
  var margin = {top: 50, right: 25, bottom: 50, left: 50},
@@ -171,7 +171,7 @@ async function byCriteria() {
 
 
  var bubbleRadius = function(criteria,d) {
-		if (criteria == "by Goals & Runs") {
+		if (criteria == "by Goals & Shots") {
 			//return r(40);
 			return 5;
 		} else { 
@@ -180,7 +180,7 @@ async function byCriteria() {
  
     }
   var bubbleColor = function(criteria,d) {
-		if (criteria == "by Goals,Runs,Avg & Conversion pct") {
+		if (criteria == "by Goals,Shots,Avg & Conversion pct") {
 			return c(d);
 		} else {
 			return d3.color("plum");
@@ -207,7 +207,7 @@ async function byCriteria() {
   //console.log(data);
 
   // List of groups (here I have one group per column)
-  var allGroup = ["by Goals & Runs", "by Goals,Runs & Avg", "by Goals,Runs,Avg & Conversion pct"]
+  var allGroup = ["by Goals & Shots", "by Goals,Shots & Avg", "by Goals,Shots,Avg & Conversion pct"]
   
   // add the options to the button
   d3.select("#selectButton")
