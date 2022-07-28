@@ -232,7 +232,7 @@ async function byCriteria() {
    //add X-axis
    svg.append("g")
 	.attr("transform","translate(0,"+height+")")
-	.call(d3.axisBottom(x).tickValues([100,300,500,700, 900]).tickFormat(d3.format("~s")));
+	.call(d3.axisBottom(x).tickValues([50,250,400,650, 800]).tickFormat(d3.format("~s")));
 	
     // text label for the x axis
    svg.append("text")             
