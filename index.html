@@ -100,19 +100,30 @@ async function init() {
       .attr("width", width + 2 * margin)
       .attr("height", height + 2 * margin);
    
-    var x = d3.scaleLog().domain([5,751]).range([0, width]);
-    var y = d3.scaleLog().domain([2,135]).range([height, 0]);
+     var x = d3.scaleLinear().domain([5,900]).range([0, width]);
+    var y = d3.scaleLinear().domain([2,150]).range([height, 0]);
    
+     var svg = d3.select("svg")
+      .attr("width", width + 2 * margin)
+      .attr("height", height + 2 * margin);
+   
+  
     var y_axis = d3.axisLeft().scale(y)
         .tickValues([50, 100, 150])
         .tickFormat(d3.format("~s"));
    
     var x_axis = d3.axisBottom().scale(x)
-        .tickValues([250,400,650, 800])
+        .tickValues([200,400,600, 800])
         .tickFormat(d3.format("~s"));
    
+  
+ 
+  
     const data = await d3.csv('https://pgambhir88.github.io/best_footballer_v2.csv');
-   
+  
+    
+    
+    
     svg.append("g").attr("transform", "translate(" + margin + "," + margin + ")")
       .selectAll("circle")
       .data(data)
