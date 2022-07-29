@@ -92,23 +92,23 @@
 async function init() {
 
 // Your code here
-    var margin = 50;
-    var width = 900;
-    var height = 900;
+    var margin = 100;
+    var width = 1000;
+    var height = 600;
    
     var svg = d3.select("svg")
       .attr("width", width + 2 * margin)
       .attr("height", height + 2 * margin);
    
-    var x = d3.scaleLog().domain([5,751]).range([0, 900]);
-var y = d3.scaleLog().domain([2,135]).range([900, 0]);
+    var x = d3.scaleLog().domain([5,751]).range([0, width]);
+    var y = d3.scaleLog().domain([2,135]).range([height, 0]);
    
     var y_axis = d3.axisLeft().scale(y)
-        .tickValues([10, 50, 100, 250])
+        .tickValues([50, 100, 150])
         .tickFormat(d3.format("~s"));
    
     var x_axis = d3.axisBottom().scale(x)
-        .tickValues([50,250,400,650])
+        .tickValues([250,400,650, 800])
         .tickFormat(d3.format("~s"));
    
     const data = await d3.csv('https://pgambhir88.github.io/best_footballer_v2.csv');
@@ -120,7 +120,7 @@ var y = d3.scaleLog().domain([2,135]).range([900, 0]);
       .append("circle")
         .attr("cx", function(d) { return (x(d.Shots)); })
         .attr("cy", function(d) { return (y(d.Goals)); })
-        .attr("r", function(d) { return (Number(2) + Number(d.Avg_1)); });
+        .attr("r", function(d) { return (Number(4) ); });
        
     d3.select("svg").append("g")
 .attr("transform", "translate(" + margin + "," + margin + ")")
@@ -132,6 +132,8 @@ d3.select("svg").append("g")
 
 
 // Your code ends here
+
+
 }
 </script>
 </body>
