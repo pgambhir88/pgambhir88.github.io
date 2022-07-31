@@ -1,5 +1,7 @@
 <html>
 <script src='https://d3js.org/d3.v5.min.js'></script>
+<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+
 <div class="text-things">
     <h1> Who is the greatest footballer between 2016 to 2020(Best FIFA Men's Player)?</h1>
 	<p> Football was first played in 1869 and world has seen many great footballers over the years, 
@@ -30,6 +32,7 @@
 	
 	/*const data = await d3.csv(
 		'https://pgambhir88.github.io/best_footballer_v2.csv');*/
+   
 
 	var table = d3.select("#fifa_ranking").append('table');
 	var thead = table.append('thead');
@@ -63,90 +66,96 @@
 
 </div>
 
-<!-- Create a div where the button will reside -->
-<!--<div class="buttons">
-    <button value = "byHundredRun" onclick="byRunsHundreds()">By runs & hundreds scored</button>   
-	<button value = "byHundredRunAvg" onclick="byAvgRunsHundreds()">By avg, runs & hundreds scored</button> 
-	<button value = "byAll" onclick="byAll()">By conversion, avg, runs & hundreds scored</button> 
-</div>-->
+
 
 <div class="text-things">
 		<p>FIFA has published the ranking year on year on basis of certain creteria but everyone is not convinced on their ranking system so we have picked up 
-			data from 2016 to 2020 and on the basis of maximum number of Runs, goals, matches played and on average basis we have calculated the 
+			data from 2016 to 2020 and on the basis of maximum number of runs, goals, matches played, average expected Shots and on 
+			number of targets per match basis we have calculated the 
 			player's ranking. .</p>
 	   
 		<p>So, below is a tool for the fans to explore on their own and support their argument
 		with data. In this we picked up data of all the players and calculated the ranking on basis of above mentioned criteria.</p>
 	
 		<p><b>We are confident you will gain different perspective driven by data as you 
-		add the parameters progressively using <i>the dropdown provided below,</i></b></p>
+		add the parameters progressively using <i>the interactive Slides provided below,</i></b></p>
 </div>
   
 <style> circle {fill: lightblue; stroke: black;} </style>
-<body onload='init()'>
-<svg width=900 height=900>
-</svg>
-
-  
-  <script>
-async function init() {
-
-// Your code here
-    var margin = 100;
-    var width = 1000;
-    var height = 600;
-   
-    var svg = d3.select("svg")
-      .attr("width", width + 2 * margin)
-      .attr("height", height + 2 * margin);
-   
-     var x = d3.scaleLinear().domain([5,900]).range([0, width]);
-    var y = d3.scaleLinear().domain([2,150]).range([height, 0]);
-   
-     var svg = d3.select("svg")
-      .attr("width", width + 2 * margin)
-      .attr("height", height + 2 * margin);
-   
-  
-    var y_axis = d3.axisLeft().scale(y)
-        .tickValues([50, 100, 150])
-        .tickFormat(d3.format("~s"));
-   
-    var x_axis = d3.axisBottom().scale(x)
-        .tickValues([200,400,600, 800])
-        .tickFormat(d3.format("~s"));
-   
+<script src="https://rawgit.com/susielu/d3-annotation/master/d3-annotation.min.js"></script>
   
  
-  
-    const data = await d3.csv('https://pgambhir88.github.io/best_footballer_v2.csv');
-  
-    
-    
-    
-    svg.append("g").attr("transform", "translate(" + margin + "," + margin + ")")
-      .selectAll("circle")
-      .data(data)
-      .enter()
-      .append("circle")
-        .attr("cx", function(d) { return (x(d.Shots)); })
-        .attr("cy", function(d) { return (y(d.Goals)); })
-        .attr("r", function(d) { return (Number(d.Avg) ); });
-       
-    d3.select("svg").append("g")
-.attr("transform", "translate(" + margin + "," + margin + ")")
-        .call(y_axis);
+  <!-- <link rel="stylesheet" type="text/css" href="css/main.css"> -->
+        <script src="byAverage.js"></script>
+        <script src="Overall.js"></script>
+        <script src="byConversion.js"></script>
+        
+ <div class="tab">
+            <button class="tablinks" onclick="DisplayPage(event, 'Overall')">Players by Number of Shots and Goals</button>
+            <button class="tablinks" onclick="DisplayPage(event, 'byAverage')">Players by Shots, Goals and Average</button>
+            <button class="tablinks" onclick="DisplayPage(event, 'byConversion')">Players by Shots, Goals, Avg and Conversion</button >
+        </div>
  
-d3.select("svg").append("g")
-.attr("transform", "translate(" + margin + "," + (height + margin) + ")")
-        .call(x_axis);
+		<div id="Overall" class="tabcontent">
+            <!-- <div id="tooltip">Hello</div> -->
+            <p style ="color:fgb(0,0,128); font-weight:bold">
+				Players by Number of Shots and Goals</p>
+            <hr>
+        </div>
+
+        <div id="byAverage" class="tabcontent">
+            <!-- <div id="tooltip">Hello</div> -->
+            <p style ="color:fgb(3,83,110); font-weight:bold">
+			Players by Shots, Goals and Average xG(expected Goals Per Match). Size of Circle is changing on basis of Average</p>
+            <hr>
+        </div>
+
+		<div id="byConversion" class="tabcontent">
+            <!-- <div id="tooltip">Hello</div> -->
+            <p style ="color:fgb(3,83,110); font-weight:bold">
+			Players by Shots, Goals, Average and Conversion( Number of Targets Per Match)</p>
+            <hr>
+        </div>
+
+		<script>
+            function DisplayPage(evnt, pageName) {
+                var i, tabcontent, tablinks;
+                d3.select("svg").remove();
+                tabcontent = document.getElementsByClassName("tabcontent");
+                for (i = 0; i < tabcontent.length; i++) {
+                    tabcontent[i].style.display = "none";
+                }
+                tablinks = document.getElementsByClassName("tablinks");
+                for (i = 0; i < tablinks.length; i++) {
+                    tablinks[i].className = tablinks[i].className.replace(" active", "");
+                    //tablinks[i].className = tablinks[i].className.replace(" active", "");
+                }
+
+                document.getElementById(pageName).style.display = "block";
+                if(evnt!==0)
+                    evnt.currentTarget.className += " active";
+                
+               
+                    
+                if(pageName === 'Overall') {
+                    Overall.display();
+                    tablinks[0].className += " active";
+                }
+				if(pageName === 'byAverage') { 
+					byAverage.display();
+                    tablinks[1].className += " active";
+                }
+				if(pageName === 'byConversion') {
+                    byConversion.display();
+                    tablinks[0].className += " active";
+                }
+            }
+            DisplayPage(0, 'Overall');
 
 
-// Your code ends here
 
-
-}
-</script>
-</body>
+			
+     </script>
+   </body>
 </html>
   
