@@ -61,7 +61,7 @@ var x = d3.scaleLinear()
           .attr("class","graph_axis_title")
           .attr("transform", "rotate(-90)")
           .attr("y", -margin.left+20)
-          .attr("x", -margin.top-150)
+          .attr("x", -margin.top-110)
           .text("Number of Goals");
 
   var dv4_tooltip = d3.select('#Overall')
@@ -89,6 +89,7 @@ function dv4_onMouseOver() {
                   
               }
 
+              
 
   svg.append("g").attr("transform", "translate(" + margin + "," + margin + ")")
     .selectAll("circle")
@@ -114,6 +115,50 @@ d3.select("svg").append("g")
 
 
 // Your code ends here
+// Adding Annotation Code here
+        //alert(sortableCntList[0]);
+        var Player = "Lionel Messi";
+        // var usaMedals = parseInt(sortableCntList[0].toString().split(",")[1]);
+        
+        const annotations = [
+            {
+                note: {
+                    label: "Player: " + Player + " ",
+                    lineType: "none",
+                    bgPadding: {"top": 20, "left": 20, "right": 20, "bottom": 20},
+                    title: "G.O.A.T",
+                    orientation: "leftRight",
+                    "align": "middle"
+                },
+                type: d3.annotationCalloutElbow,
+                connector: { end: "arrow" },
+                subject: {radius: 60},
+                x: x,
+                y: y,
+                dx: "420",
+                dy: "10"
+            },
+        ];
+        const makeAnnotations = d3.annotation().annotations(annotations);
+        
+        d3.select("svg")
+            .append("g")
+            .attr("transform",
+                "translate(" + margin.left + "," + margin.top + ")")
+            .attr("class", "annotation-group")
+            .call(makeAnnotations)
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 }

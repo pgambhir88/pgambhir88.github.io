@@ -59,7 +59,7 @@ var x = d3.scaleLinear()
          .attr("class","graph_axis_title")
          .attr("transform", "rotate(-90)")
          .attr("y", -margin.left+20)
-         .attr("x", -margin.top-150)
+         .attr("x", -margin.top-110)
          .text("Number of Goals");
 
  var dv4_tooltip = d3.select('#byAverage')
@@ -106,6 +106,41 @@ d3.select("svg").append("g")
 d3.select("svg").append("g")
 .attr("transform", "translate(" + margin + "," + (height + margin) + ")")
      .call(x);
+
+     //Adding Annotation Code here
+     //alert(sortableCntList[0]);
+     var Player = "Robert Lewandowski";
+     // var usaMedals = parseInt(sortableCntList[0].toString().split(",")[1]);
+     
+     const annotations = [
+         {
+             note: {
+                 label: "Player: " + Player + " ",
+                 lineType: "none",
+                 bgPadding: {"top": 20, "left": 20, "right": 20, "bottom": 20},
+                 title: "Best Average",
+                 orientation: "leftRight",
+                 "align": "middle"
+             },
+             type: d3.annotationCalloutElbow,
+             connector: { end: "arrow" },
+             subject: {radius: 30},
+             x: x,
+             y: y,
+             dx: "270",
+             dy: "-8"
+         },
+     ];
+     const makeAnnotations = d3.annotation().annotations(annotations);
+     
+     d3.select("svg")
+         .append("g")
+         .attr("transform",
+             "translate(" + margin.left + "," + margin.top + ")")
+         .attr("class", "annotation-group")
+         .call(makeAnnotations)
+
+
 
 
 }

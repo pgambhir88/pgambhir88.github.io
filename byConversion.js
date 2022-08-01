@@ -62,7 +62,7 @@ var byConversion={
             .attr("class","graph_axis_title")
             .attr("transform", "rotate(-90)")
             .attr("y", -margin.left+20)
-            .attr("x", -margin.top-150)
+            .attr("x", -margin.top-110)
             .text("Number of Goals");
  
    

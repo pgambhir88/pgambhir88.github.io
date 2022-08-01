@@ -28,7 +28,7 @@
 					"3.Robert Lewandowski",
 					"4.Edin Dzeko",
 					"5.Ciro Immobile"]
-	var points =["751","744","587","583","534"]
+	var points =["Shots: 751","Shots: 744","Shots: 587","Shots: 583","Shots: 534"]
 	
 	/*const data = await d3.csv(
 		'https://pgambhir88.github.io/best_footballer_v2.csv');*/
@@ -70,7 +70,7 @@
 
 <div class="text-things">
 		<p>FIFA has published the ranking year on year on basis of certain creteria but everyone is not convinced on their ranking system so we have picked up 
-			data from 2016 to 2020 and on the basis of maximum number of runs, goals, matches played, average expected Shots and on 
+			data from 2016 to 2020 and on the basis of maximum number of shots, goals, matches played, average expected Shots and on 
 			number of targets per match basis we have calculated the 
 			player's ranking. .</p>
 	   
@@ -95,26 +95,32 @@
             <button class="tablinks" onclick="DisplayPage(event, 'byAverage')">Players by Shots, Goals and Average</button>
             <button class="tablinks" onclick="DisplayPage(event, 'byConversion')">Players by Shots, Goals, Avg and Conversion</button >
         </div>
- 
+        
 		<div id="Overall" class="tabcontent">
             <!-- <div id="tooltip">Hello</div> -->
             <p style ="color:fgb(0,0,128); font-weight:bold">
-				Players by Number of Shots and Goals</p>
-            <hr>
+				Position of Players on basis of Number of Shots and Number of Goals</p>
+				<p style ="color:#8a2be2">
+					Hover the mouse over data points to see additional details about the players</p>
+				<hr>
         </div>
 
         <div id="byAverage" class="tabcontent">
             <!-- <div id="tooltip">Hello</div> -->
             <p style ="color:fgb(3,83,110); font-weight:bold">
-			Players by Shots, Goals and Average xG(expected Goals Per Match). Size of Circle is changing on basis of Average</p>
-            <hr>
+			Position of Players by Shots, Goals and Average xG(expected Goals Per Match). Size of Circle is changing on basis of Average</p>
+            <p style ="color:#8a2be2">
+				Hover the mouse over data points to see additional details about the players</p>
+			<hr>
         </div>
 
 		<div id="byConversion" class="tabcontent">
             <!-- <div id="tooltip">Hello</div> -->
             <p style ="color:fgb(3,83,110); font-weight:bold">
-			Players by Shots, Goals, Average and Conversion( Number of Targets Per Match)</p>
-            <hr>
+			Position of Players by Shots, Goals, Average and Conversion( Number of Targets Per Match)</p>
+            <p style ="color:#8a2be2">
+				Hover the mouse over data points to see additional details about the players</p>
+			<hr>
         </div>
 
 		<script>
